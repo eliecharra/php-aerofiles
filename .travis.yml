@@ -7,7 +7,7 @@ matrix:
     - php: nightly
 before_install:
   - pecl install xdebug-2.7.0beta1
-  - echo "extension=xdebug.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - echo "zend_extension=xdebug.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 before_script: composer install
 script: vendor/bin/phpunit --coverage-clover=coverage.clover
 after_script:
