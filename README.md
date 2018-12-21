@@ -1,5 +1,8 @@
 # php-aerofile
 
+[![Build Status](https://travis-ci.com/eliecharra/php-aerofiles.svg?branch=master)](https://travis-ci.com/eliecharra/php-aerofiles)
+
+
 **waypoint, task, tracklog readers and writers for aviation**
 
 ## Supported formats :
