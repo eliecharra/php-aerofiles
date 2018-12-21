@@ -1,8 +1,8 @@
 # php-aerofile
 
 [![Build Status](https://travis-ci.com/eliecharra/php-aerofiles.svg?branch=master)](https://travis-ci.com/eliecharra/php-aerofiles)
-![Code coverage](https://scrutinizer-ci.com/g/eliecharra/php-aerofiles/badges/coverage.png?b=master)
-![Quality](https://scrutinizer-ci.com/g/eliecharra/php-aerofiles/badges/quality-score.png?b=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/eliecharra/php-aerofiles/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/eliecharra/php-aerofiles/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/eliecharra/php-aerofiles/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/eliecharra/php-aerofiles/?branch=master)
 
 **waypoint, task, tracklog readers and writers for aviation**
 
