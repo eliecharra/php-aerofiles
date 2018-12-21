@@ -94,6 +94,11 @@ class Reader implements ReaderInterface {
             /x', $line, $m)
         ) {
             $time = \DateTimeImmutable::createFromFormat('His', $m['date']);
+
+            if (!$time instanceof \DateTimeImmutable) {
+                return;
+            }
+
             $lat = (strtoupper($m['latHemi']) == 'N'? 1 : -1) *
                 ($m['latDeg'] + ($m['latMin'] * 1000 + $m['latSec']) / 1000.0 / 60);
             $lon = (strtoupper($m['lonHemi']) == 'E'? 1 : -1) *
