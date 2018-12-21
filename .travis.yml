@@ -6,7 +6,7 @@ matrix:
   allow_failures:
     - php: nightly
 before_install:
-  - echo "extension = xdebug.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - pecl install xdebug
 before_script: composer install
 script: vendor/bin/phpunit --coverage-clover=coverage.clover
 after_script:
