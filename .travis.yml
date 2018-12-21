@@ -6,7 +6,7 @@ matrix:
   allow_failures:
     - php: nightly
 before_install:
-  - if [ "$TRAVIS_PHP_VERSION" = "7.3" ]; pecl install xdebug-2.7.0beta1; fi
+  - if [ "$TRAVIS_PHP_VERSION" == "7.3" ]; pecl install xdebug-2.7.0beta1; fi
 before_script: composer install
 script: vendor/bin/phpunit --coverage-clover=coverage.clover
 after_script:
