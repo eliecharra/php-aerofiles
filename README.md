@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.com/eliecharra/php-aerofiles.svg?branch=master)](https://travis-ci.com/eliecharra/php-aerofiles)
 ![Code coverage](https://scrutinizer-ci.com/g/eliecharra/php-aerofiles/badges/coverage.png?b=master)
+![Quality](https://scrutinizer-ci.com/g/eliecharra/php-aerofiles/badges/quality-score.png?b=master)
 
 **waypoint, task, tracklog readers and writers for aviation**
 
