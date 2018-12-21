@@ -6,9 +6,9 @@ matrix:
   allow_failures:
     - php: nightly
 before_install:
-  - [ "$TRAVIS_PHP_VERSION" = "7.3" ] && pecl install xdebug-2.7.0beta1 && echo "zend_extension=xdebug.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - if [ "$TRAVIS_PHP_VERSION" = "7.3" ]; then pecl install xdebug-2.7.0beta1; echo "zend_extension=xdebug.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi
 before_script: composer install
 script: vendor/bin/phpunit --coverage-clover=coverage.clover
 after_script:
-  - [ "$TRAVIS_PHP_VERSION" != "nightly" ] && wget https://scrutinizer-ci.com/ocular.phar
-  - [ "$TRAVIS_PHP_VERSION" != "nightly" ] && php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+  - if [ "$TRAVIS_PHP_VERSION" != "nightly" ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+  - if [ "$TRAVIS_PHP_VERSION" != "nightly" ]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
