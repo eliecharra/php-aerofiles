@@ -107,7 +107,15 @@ class Reader implements ReaderInterface {
                 throw new InvalidLineException();
             }
 
-            $dateTime = (clone $date)->setTime($time->format('H'), $time->format('i'), $time->format('s'));
+            $dateTime = (clone $date)->setTime(
+                (int)$time->format('H'),
+                (int)$time->format('i'),
+                (int)$time->format('s')
+            );
+
+            if (!$dateTime instanceof \DateTimeImmutable) {
+                throw new InvalidLineException();
+            }
 
             $lat = (strtoupper($m['latHemi']) == 'N'? 1 : -1) *
                 ($m['latDeg'] + ($m['latMin'] * 1000 + $m['latSec']) / 1000.0 / 60);
@@ -132,7 +140,11 @@ class Reader implements ReaderInterface {
         }
 
         if (preg_match('/DTEDATE:(?P<date>\d{2}\d{2}\d{2})/', $line, $m)) {
-            $this->trackData['date'] = \DateTimeImmutable::createFromFormat('dmy', $m['date']);
+            $date = \DateTimeImmutable::createFromFormat('dmy', $m['date']);
+            if (!$date instanceof \DateTimeImmutable) {
+                throw new InvalidLineException();
+            }
+            $this->trackData['date'] = $date;
         }
 
         if (preg_match('/GLIDERTYPE.*?:(.*)$/mi', $line, $m)) {
