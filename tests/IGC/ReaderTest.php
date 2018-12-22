@@ -38,13 +38,14 @@ class ReaderTest extends TestCase
     {
         $stream = fopen(__DIR__ . '/data/' . $file, 'rb');
         $result = $this->reader->read($stream);
+        $this->assertEquals('151218', $result->getDate()->format('dmy'));
         $this->assertEquals('Saint Hilaire', $result->getFlight()->getTakeOff()->getSite());
         $this->assertEquals(933, $result->getFlight()->getTakeOff()->getPoint()->getAltitude());
         $this->assertEquals(45.306833, $result->getFlight()->getTakeOff()->getPoint()->getCoordinate()->getLat());
         $this->assertEquals(5.887717, $result->getFlight()->getTakeOff()->getPoint()->getCoordinate()->getLng());
         $this->assertEquals(
-            \DateTimeImmutable::createFromFormat('H:i:s', '13:16:18')->format('H:i:s'),
-            $result->getFlight()->getTakeOff()->getPoint()->getTime()->format('H:i:s')
+            \DateTimeImmutable::createFromFormat('dmy H:i:s', '151218 14:16:18', new \DateTimeZone('Europe/Paris')),
+            $result->getFlight()->getTakeOff()->getPoint()->getTime()
         );
 
         $this->assertEquals('', $result->getFlight()->getLanding()->getSite());
@@ -52,8 +53,8 @@ class ReaderTest extends TestCase
         $this->assertEquals(45.302533, $result->getFlight()->getLanding()->getPoint()->getCoordinate()->getLat());
         $this->assertEquals(5.906600, $result->getFlight()->getLanding()->getPoint()->getCoordinate()->getLng());
         $this->assertEquals(
-            \DateTimeImmutable::createFromFormat('H:i:s', '13:37:23')->format('H:i:s'),
-            $result->getFlight()->getLanding()->getPoint()->getTime()->format('H:i:s')
+            \DateTimeImmutable::createFromFormat('dmy H:i:s', '151218 14:37:23', new \DateTimeZone('Europe/Paris')),
+            $result->getFlight()->getLanding()->getPoint()->getTime()
         );
 
         $this->assertEquals('Elie CHARRA', $result->getPilot());
@@ -87,4 +88,12 @@ class ReaderTest extends TestCase
         $this->reader->read($stream);
     }
 
+    /**
+     * @expectedException Aerofiles\Exception\MissingRequiredFieldException
+     */
+    public function testMissingDate()
+    {
+        $stream = fopen(__DIR__ . '/data/missing_date.igc', 'rb');
+        $this->reader->read($stream);
+    }
 }

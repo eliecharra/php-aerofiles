@@ -9,6 +9,11 @@ class Result implements ResultInterface
 {
 
     /**
+     * @var \DateTimeImmutable date of the flight (does not contains time)
+     */
+    private $date;
+
+    /**
      * @var string Pilot name
      */
     private $pilot;
@@ -30,13 +35,23 @@ class Result implements ResultInterface
      * @param string $gliderType
      */
     public function __construct(
+        \DateTimeImmutable $date,
         string $pilot,
         string $gliderType,
         Flight $flight
     ) {
+        $this->date = $date;
         $this->pilot = $pilot;
         $this->gliderType = $gliderType;
         $this->flight = $flight;
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getDate(): \DateTimeImmutable
+    {
+        return $this->date;
     }
 
     /**
