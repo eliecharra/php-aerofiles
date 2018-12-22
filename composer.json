@@ -1,7 +1,6 @@
 {
   "name": "eliecharra/php-aerofile",
   "type": "library",
-  "version": "0.1.0",
   "description": "Waypoint, task, tracklog readers for aviation",
   "keywords": ["aviation", "IGC", "paragliding"],
   "homepage": "https://github.com/eliecharra/php-aerofile",
