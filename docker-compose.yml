@@ -4,3 +4,4 @@ services:
     build: .
     volumes:
       - .:/var/www
+      - /etc/localtime:/etc/localtime:ro

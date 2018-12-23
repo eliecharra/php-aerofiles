@@ -101,19 +101,9 @@ class Reader implements ReaderInterface {
         ) {
             /** @var \DateTimeImmutable $date */
             $date = $this->trackData['date'];
-            $time = \DateTimeImmutable::createFromFormat('His', $m['date']);
+            $time = \DateTimeImmutable::createFromFormat('dmyHisO', $date->format('dmy') . $m['date'] . '+0000');
 
             if (!$time instanceof \DateTimeImmutable) {
-                throw new InvalidLineException();
-            }
-
-            $dateTime = (clone $date)->setTime(
-                (int)$time->format('H'),
-                (int)$time->format('i'),
-                (int)$time->format('s')
-            );
-
-            if (!$dateTime instanceof \DateTimeImmutable) {
                 throw new InvalidLineException();
             }
 
@@ -124,7 +114,7 @@ class Reader implements ReaderInterface {
             $coordinate = new Coordinate(round($lat, 6), round($lon, 6));
             $altitude = (int)$m['elevG'];
 
-            $this->trackData['points'][] = new Point($dateTime, $altitude, $coordinate);
+            $this->trackData['points'][] = new Point($time, $altitude, $coordinate);
         }
     }
     private function parseCRecord(string $line){}

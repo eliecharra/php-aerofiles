@@ -44,7 +44,7 @@ class ReaderTest extends TestCase
         $this->assertEquals(45.306833, $result->getFlight()->getTakeOff()->getPoint()->getCoordinate()->getLat());
         $this->assertEquals(5.887717, $result->getFlight()->getTakeOff()->getPoint()->getCoordinate()->getLng());
         $this->assertEquals(
-            \DateTimeImmutable::createFromFormat('dmy H:i:s', '151218 14:16:18', new \DateTimeZone('Europe/Paris')),
+            \DateTimeImmutable::createFromFormat('dmy H:i:s O', '151218 13:16:18 +0000'),
             $result->getFlight()->getTakeOff()->getPoint()->getTime()
         );
 
@@ -53,7 +53,7 @@ class ReaderTest extends TestCase
         $this->assertEquals(45.302533, $result->getFlight()->getLanding()->getPoint()->getCoordinate()->getLat());
         $this->assertEquals(5.906600, $result->getFlight()->getLanding()->getPoint()->getCoordinate()->getLng());
         $this->assertEquals(
-            \DateTimeImmutable::createFromFormat('dmy H:i:s', '151218 14:37:23', new \DateTimeZone('Europe/Paris')),
+            \DateTimeImmutable::createFromFormat('dmy H:i:s O', '151218 13:37:23 +0000'),
             $result->getFlight()->getLanding()->getPoint()->getTime()
         );
 
