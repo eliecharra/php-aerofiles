@@ -42,7 +42,6 @@ class Reader implements ReaderInterface {
 
         $this->trackData['points'] = [];
 
-        rewind($stream);
         while(!feof($stream)) {
             $line = trim(fgets($stream));
             $this->parseLine($line);
