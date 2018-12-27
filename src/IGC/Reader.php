@@ -26,6 +26,7 @@ class Reader implements ReaderInterface {
     private $trackData = [
         'date' => null,
         'pilot' => '',
+        'site' => '',
         'gliderType' => '',
     ];
 
@@ -57,7 +58,7 @@ class Reader implements ReaderInterface {
             $this->trackData['gliderType'],
             new Flight(
                 new TakeOff(
-                    'Saint Hilaire',
+                    $this->trackData['site'],
                     $this->trackData['points'][0]
                 ),
                 new Landing(
@@ -138,6 +139,10 @@ class Reader implements ReaderInterface {
 
         if (preg_match('/GLIDERTYPE.*?:(.*)$/mi', $line, $m)) {
             $this->trackData['gliderType'] = trim($m[1]);
+        }
+
+        if (preg_match('/H.SIT.*?:(.*)$/mi', $line, $m)) {
+            $this->trackData['site'] = trim($m[1]);
         }
     }
 
