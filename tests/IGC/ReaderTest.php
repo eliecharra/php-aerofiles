@@ -98,4 +98,22 @@ class ReaderTest extends TestCase
         $stream = fopen(__DIR__ . '/data/missing_date.igc', 'rb');
         $this->reader->read($stream);
     }
+
+    /**
+     */
+    public function testNewDate()
+    {
+        $stream = fopen(__DIR__ . '/data/test_new_day.igc', 'rb');
+        $result = $this->reader->read($stream);
+
+        $this->assertEquals('151218', $result->getDate()->format('dmy'));
+        $this->assertEquals(
+            \DateTimeImmutable::createFromFormat('dmy H:i:s O', '151218 23:16:18 +0000'),
+            $result->getFlight()->getTakeOff()->getPoint()->getTime()
+        );
+        $this->assertEquals(
+            \DateTimeImmutable::createFromFormat('dmy H:i:s O', '161218 00:16:20 +0000'),
+            $result->getFlight()->getLanding()->getPoint()->getTime()
+        );
+    }
 }

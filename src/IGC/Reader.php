@@ -31,6 +31,11 @@ class Reader implements ReaderInterface {
     ];
 
     /**
+     * @var string
+     */
+    private $previousTime;
+
+    /**
      * @param resource $stream
      * @throws InvalidLineException
      * @throws InvalidLineLengthException
@@ -107,9 +112,9 @@ class Reader implements ReaderInterface {
                 throw new InvalidLineException();
             }
 
-            // TODO handler day changes
-            // If the UTC seconds into the day rolls back to 0 advance the flight UTC date by 1 day
-            //      if (fixTime < previousTime) { flightDate.setDate(flightDate.getDate() + 1); }
+            if(null !== $this->previousTime && $time < $this->previousTime) {
+                $time = $time->add(new \DateInterval('P1D'));
+            }
 
             $lat = (strtoupper($m['latHemi']) == 'N'? 1 : -1) *
                 ($m['latDeg'] + ($m['latMin'] * 1000 + $m['latSec']) / 1000.0 / 60);
@@ -119,6 +124,7 @@ class Reader implements ReaderInterface {
             $altitude = (int)$m['elevG'];
 
             $this->trackData['points'][] = new Point($time, $altitude, $coordinate, (int)$m['elevP']);
+            $this->previousTime = $time;
         }
     }
     private function parseCRecord(string $line){}
