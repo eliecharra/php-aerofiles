@@ -107,6 +107,10 @@ class Reader implements ReaderInterface {
                 throw new InvalidLineException();
             }
 
+            // TODO handler day changes
+            // If the UTC seconds into the day rolls back to 0 advance the flight UTC date by 1 day
+            //      if (fixTime < previousTime) { flightDate.setDate(flightDate.getDate() + 1); }
+
             $lat = (strtoupper($m['latHemi']) == 'N'? 1 : -1) *
                 ($m['latDeg'] + ($m['latMin'] * 1000 + $m['latSec']) / 1000.0 / 60);
             $lon = (strtoupper($m['lonHemi']) == 'E'? 1 : -1) *
@@ -114,7 +118,7 @@ class Reader implements ReaderInterface {
             $coordinate = new Coordinate(round($lat, 6), round($lon, 6));
             $altitude = (int)$m['elevG'];
 
-            $this->trackData['points'][] = new Point($time, $altitude, $coordinate);
+            $this->trackData['points'][] = new Point($time, $altitude, $coordinate, (int)$m['elevP']);
         }
     }
     private function parseCRecord(string $line){}

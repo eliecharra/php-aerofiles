@@ -12,9 +12,14 @@ class Point
     private $time;
 
     /**
-     * @var int Altitude in meters
+     * @var int Altitude in meters (retrieved from gps)
      */
-    private $altitude;
+    private $gpsAltitude;
+
+    /**
+     * @var int Altitude in meters (retrieved from pressure sensor)
+     */
+    private $pressureAltitude;
 
     /**
      * @var Coordinate
@@ -27,10 +32,11 @@ class Point
      * @param int $altitude
      * @param Coordinate $coordinate
      */
-    public function __construct(\DateTimeImmutable $time, int $altitude, Coordinate $coordinate)
+    public function __construct(\DateTimeImmutable $time, int $GPSAltitude, Coordinate $coordinate, int $pressureAltitude = null)
     {
         $this->time = $time;
-        $this->altitude = $altitude;
+        $this->gpsAltitude = $GPSAltitude;
+        $this->pressureAltitude = $pressureAltitude;
         $this->coordinate = $coordinate;
     }
 
@@ -43,11 +49,29 @@ class Point
     }
 
     /**
+     * @deprecated
      * @return int
      */
     public function getAltitude(): int
     {
-        return $this->altitude;
+        trigger_error('Method ' . __METHOD__ . ' is deprecated, use either getGpsAltitude or getPressureAltitude', E_USER_DEPRECATED);
+        return $this->getGpsAltitude();
+    }
+
+    /**
+     * @return int
+     */
+    public function getGpsAltitude(): int
+    {
+        return $this->gpsAltitude;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPressureAltitude(): ?int
+    {
+        return $this->pressureAltitude;
     }
 
     /**

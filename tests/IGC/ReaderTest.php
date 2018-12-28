@@ -40,7 +40,8 @@ class ReaderTest extends TestCase
         $result = $this->reader->read($stream);
         $this->assertEquals('151218', $result->getDate()->format('dmy'));
         $this->assertEquals('Saint Hilaire', $result->getFlight()->getTakeOff()->getSite());
-        $this->assertEquals(933, $result->getFlight()->getTakeOff()->getPoint()->getAltitude());
+        $this->assertEquals(933, $result->getFlight()->getTakeOff()->getPoint()->getGpsAltitude());
+        $this->assertEquals(893, $result->getFlight()->getTakeOff()->getPoint()->getPressureAltitude());
         $this->assertEquals(45.306833, $result->getFlight()->getTakeOff()->getPoint()->getCoordinate()->getLat());
         $this->assertEquals(5.887717, $result->getFlight()->getTakeOff()->getPoint()->getCoordinate()->getLng());
         $this->assertEquals(
@@ -49,7 +50,8 @@ class ReaderTest extends TestCase
         );
 
         $this->assertEquals('', $result->getFlight()->getLanding()->getSite());
-        $this->assertEquals(314, $result->getFlight()->getLanding()->getPoint()->getAltitude());
+        $this->assertEquals(314, $result->getFlight()->getLanding()->getPoint()->getGpsAltitude());
+        $this->assertEquals(171, $result->getFlight()->getLanding()->getPoint()->getPressureAltitude());
         $this->assertEquals(45.302533, $result->getFlight()->getLanding()->getPoint()->getCoordinate()->getLat());
         $this->assertEquals(5.906600, $result->getFlight()->getLanding()->getPoint()->getCoordinate()->getLng());
         $this->assertEquals(
