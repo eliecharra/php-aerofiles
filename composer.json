@@ -1,9 +1,9 @@
 {
-  "name": "eliecharra/php-aerofile",
+  "name": "eliecharra/aerofiles",
   "type": "library",
   "description": "Waypoint, task, tracklog readers for aviation",
   "keywords": ["aviation", "IGC", "paragliding"],
-  "homepage": "https://github.com/eliecharra/php-aerofile",
+  "homepage": "https://github.com/eliecharra/php-aerofiles",
   "license": "MIT",
   "authors": [
     {
@@ -12,7 +12,7 @@
     }
   ],
   "support": {
-    "issues": "https://github.com/eliecharra/php-aerofile/issues"
+    "issues": "https://github.com/eliecharra/php-aerofiles/issues"
   },
   "require": {
     "php": "~7.3",
