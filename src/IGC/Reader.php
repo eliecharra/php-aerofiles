@@ -149,14 +149,7 @@ class Reader implements ReaderInterface {
             $this->trackData['pilot'] = trim($m[1]);
         }
 
-        if (preg_match('/DTE.*?:?(?P<date>\d{2}\d{2}\d{2})/', $line, $m)) {
-            $date = \DateTimeImmutable::createFromFormat('dmy O', $m['date'] . ' +0000');
-            if (\DateTimeImmutable::getLastErrors()['warning_count'] > 0 ||
-                \DateTimeImmutable::getLastErrors()['error_count']) {
-                throw new InvalidLineException();
-            }
-            $this->trackData['date'] = $date;
-        }
+        $this->parseDate($line);
 
         if (preg_match('/GLIDERTYPE.*?:(.*)$/mi', $line, $m)) {
             $this->trackData['gliderType'] = trim($m[1]);
@@ -164,6 +157,18 @@ class Reader implements ReaderInterface {
 
         if (preg_match('/H.SIT.*?:(.*)$/mi', $line, $m)) {
             $this->trackData['site'] = trim($m[1]);
+        }
+    }
+
+    private function parseDate(string $line) : void
+    {
+        if (preg_match('/DTE.*?:?(?P<date>\d{2}\d{2}\d{2})/', $line, $m)) {
+            $date = \DateTimeImmutable::createFromFormat('dmy O', $m['date'] . ' +0000');
+            if (\DateTimeImmutable::getLastErrors()['warning_count'] > 0 ||
+                \DateTimeImmutable::getLastErrors()['error_count']) {
+                throw new InvalidLineException();
+            }
+            $this->trackData['date'] = $date;
         }
     }
 
