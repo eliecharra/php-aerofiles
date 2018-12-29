@@ -151,7 +151,8 @@ class Reader implements ReaderInterface {
 
         if (preg_match('/DTE.*?:?(?P<date>\d{2}\d{2}\d{2})/', $line, $m)) {
             $date = \DateTimeImmutable::createFromFormat('dmy O', $m['date'] . ' +0000');
-            if (!$date instanceof \DateTimeImmutable) {
+            if (\DateTimeImmutable::getLastErrors()['warning_count'] > 0 ||
+                \DateTimeImmutable::getLastErrors()['error_count']) {
                 throw new InvalidLineException();
             }
             $this->trackData['date'] = $date;

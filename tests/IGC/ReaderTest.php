@@ -95,7 +95,16 @@ class ReaderTest extends TestCase
      */
     public function testMissingDate()
     {
-        $stream = fopen(__DIR__ . '/data/missing_date.igc', 'rb');
+        $stream = fopen(__DIR__ . '/data/date/missing.igc', 'rb');
+        $this->reader->read($stream);
+    }
+
+    /**
+     * @expectedException Aerofiles\Exception\IGC\InvalidLineException
+     */
+    public function testInvalidDate()
+    {
+        $stream = fopen(__DIR__ . '/data/date/invalid.igc', 'rb');
         $this->reader->read($stream);
     }
 
