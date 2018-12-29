@@ -93,9 +93,19 @@ class Reader implements ReaderInterface {
         $this->$method($line);
     }
 
+    private function checkMandatoryField()
+    {
+        if (!$this->trackData['date'] instanceof \DateTimeImmutable) {
+            throw new MissingRequiredFieldException();
+        }
+    }
+
     private function parseARecord(string $line){}
 
     private function parseBRecord(string $line){
+
+        $this->checkMandatoryField();
+
         if (preg_match(
             '/B
                 (?P<date>\d{2}\d{2}\d{2})
@@ -139,8 +149,8 @@ class Reader implements ReaderInterface {
             $this->trackData['pilot'] = trim($m[1]);
         }
 
-        if (preg_match('/DTEDATE:(?P<date>\d{2}\d{2}\d{2})/', $line, $m)) {
-            $date = \DateTimeImmutable::createFromFormat('dmy', $m['date']);
+        if (preg_match('/DTE.*?:?(?P<date>\d{2}\d{2}\d{2})/', $line, $m)) {
+            $date = \DateTimeImmutable::createFromFormat('dmy O', $m['date'] . ' +0000');
             if (!$date instanceof \DateTimeImmutable) {
                 throw new InvalidLineException();
             }
@@ -156,11 +166,7 @@ class Reader implements ReaderInterface {
         }
     }
 
-    private function parseIRecord(string $line){
-        if (!$this->trackData['date'] instanceof \DateTimeImmutable) {
-            throw new MissingRequiredFieldException();
-        }
-    }
+    private function parseIRecord(string $line){}
     private function parseJRecord(string $line){}
     private function parseKRecord(string $line){}
     private function parseLRecord(string $line){}

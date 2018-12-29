@@ -116,4 +116,32 @@ class ReaderTest extends TestCase
             $result->getFlight()->getLanding()->getPoint()->getTime()
         );
     }
+
+    /**
+     * @dataProvider dateProvider
+     */
+    public function testDateField($file, $expectedDate)
+    {
+        $stream = fopen(__DIR__ . "/data/date/$file.igc", 'rb');
+        $result = $this->reader->read($stream);
+        $this->assertEquals(
+            \DateTimeImmutable::createFromFormat('d-m-Y O',  "$expectedDate +0000"),
+            $result->getDate()
+        );
+    }
+
+    public function dateProvider()
+    {
+        return [
+            [
+                'no_colon',
+                '13-10-2018'
+            ],
+            [
+                'no_colon_no_DATE',
+                '09-11-2018'
+            ]
+
+        ];
+    }
 }
