@@ -31,7 +31,7 @@ class Reader implements ReaderInterface {
     ];
 
     /**
-     * @var string
+     * @var \DateTimeImmutable
      */
     private $previousTime;
 
